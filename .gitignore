@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pkl
+*.pickle
+*.ipynb_checkpoints/
+node_modules/

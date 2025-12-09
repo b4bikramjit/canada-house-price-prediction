@@ -2,8 +2,6 @@ services:
   - type: web
     name: canada-house-price-backend
     env: python
-    region: ohio
-    plan: free
     rootDirectory: backend
     pythonVersion: 3.10
     buildCommand: "pip install -r requirements.txt"

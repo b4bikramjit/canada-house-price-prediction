@@ -118,7 +118,7 @@ document.getElementById("predict_btn").addEventListener("click", async () => {
 
     try {
 
-        const res = await fetch("http://localhost:8000/api/predict", {
+        const res = await fetch("https://canada-house-price-prediction-4.onrender.com/api/predict", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(payload)

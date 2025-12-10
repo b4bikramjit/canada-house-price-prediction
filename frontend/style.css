@@ -26,8 +26,7 @@
     transition: 0.3s;
     overflow-y: hidden;
     overflow-x: hidden;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius:10px ;
+   
  }
 
 .sidebar.collapsed {
@@ -330,6 +329,38 @@
     box-shadow: 0 6px 16px rgba(91, 79, 232, 0.4);
   }
   
+.loader-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1px;
+}
+
+
+.loader {
+  
+  width: 45px;
+  aspect-ratio: .75;
+  --c: no-repeat linear-gradient(#2D2066 0 0);
+  background: 
+    var(--c) 0%   50%,
+    var(--c) 50%  50%,
+    var(--c) 100% 50%;
+  animation: l7 1s infinite linear alternate;
+  pointer-events: none;
+  margin-bottom: 50px;
+}
+
+@keyframes l7 {
+  0%  {background-size: 20% 50% ,20% 50% ,20% 50% }
+  20% {background-size: 20% 20% ,20% 50% ,20% 50% }
+  40% {background-size: 20% 100%,20% 20% ,20% 50% }
+  60% {background-size: 20% 50% ,20% 100%,20% 20% }
+  80% {background-size: 20% 50% ,20% 50% ,20% 100%}
+  100%{background-size: 20% 50% ,20% 50% ,20% 50% }
+}
+
   .results {
     background: linear-gradient(135deg, #5B4FE8 0%, #7C3AED 100%);
     border-radius: 12px;
@@ -340,12 +371,13 @@
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: opacity 0.4s ease, max-height 0.4s ease;
+    transition: opacity 0.8s ease, max-height 0.8s ease;
   }
 
   .results.show {
     opacity: 1;
     max-height: 500px;  
+    ;
   }
   
   .results-header {
@@ -393,77 +425,130 @@
     font-size: 20px;
     font-weight: 600;
   }
-  
-  @media (max-width: 768px) {
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .checkbox-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .price-main {
-      font-size: 36px;
-    }
+
+/* ============================
+   MOBILE RESPONSIVENESS FIX
+   ============================ */
+/* Desktop: Sidebar open by default */
+
+
+
+@media (max-width: 1024px) {
+
+  /* Body padding removed */
+  body {
+    padding: 10px;
   }
 
+  /* Sidebar becomes sliding menu */
+  .sidebar {
+    
+    overflow-y: auto;
+  }
+  
 
+  .sidebar.collapsed {
+   
+    overflow-y: hidden;
+  }
 
-  @media (max-width: 900px) {
+  /* Full sidebar content hidden on mobile by default */
+  
 
-    body {
-        padding: 20px;
-    }
+  /* When expanded, show the sidebar content */
+  .sidebar:not(.collapsed) {
+    width: 230px;
+  }
+  .sidebar:not(.collapsed) .sidebar-content {
+    display: block;
+  }
 
-    /* Sidebar collapses automatically */
-    .sidebar {
-        width: 70px !important;
-        padding: 20px 10px !important;
-    }
+  /* Adjust toggle button */
+  #sidebarToggle {
+    left: 15px;
+    top: 15px;
+  }
 
-    .sidebar-content {
-        display: none !important;
-    }
+  /* Container shifts below the sidebar */
+  .container {
+    margin-left: 80px !important;
+    margin-top: 80px;
+    padding: 10px;
+  }
 
-    .container {
-        margin-left: 100px !important;
-        max-width: 100%;
-        padding: 0 10px;
-    }
+  /* Section spacing */
+  .section {
+    padding: 18px;
+  }
 
-    .header h1 {
-        font-size: 26px;
-    }
+  /* Form grid becomes 1 column */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
 
-    .subtitle {
-        font-size: 13px;
-    }
+  /* Checkbox grid becomes 2 columns */
+  .checkbox-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 
-    .section {
-        padding: 18px;
-    }
+  /* Results box scales down */
+  .price-main {
+    font-size: 34px;
+  }
 
-    /* Form grid collapses */
-    .form-grid {
-        grid-template-columns: 1fr !important;
-    }
-
-    .checkbox-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-
-    .price-main {
-        font-size: 32px;
-    }
-
-    .price-range-grid {
-        grid-template-columns: 1fr !important;
-    }
+  .price-range-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Ensure SVGs behave responsively */
-svg {
-    max-width: 100%;
-    height: auto;
+@media (max-width: 768px) {
+
+ 
+
+  .sidebar.collapsed {
+   
+    overflow-y: hidden;
+  }
+
+ 
+ 
+
+  /* Container shifts below the sidebar */
+  .container {
+    margin-left: 60px !important;
+    margin-top: 80px;
+    padding: 10px;
+  }
+
 }
+
+
+/* ============================
+   VERY SMALL PHONES (≤ 480px)
+   ============================ */
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .section {
+    padding: 14px;
+  }
+
+  input,
+  select {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .predict-button {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .price-main {
+    font-size: 30px;
+  }
+}
+

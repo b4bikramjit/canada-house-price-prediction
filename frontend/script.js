@@ -1,4 +1,22 @@
 
+
+function adjustSidebar() {
+    const sidebar = document.querySelector(".sidebar");
+
+    if (window.innerWidth >= 1025) {
+        sidebar.classList.remove("collapsed");   // OPEN on desktop
+    } else {
+        sidebar.classList.add("collapsed");      // COLLAPSED on mobile/tablet
+    }
+}
+
+// Run on load
+adjustSidebar();
+
+// Run on window resize
+window.addEventListener("resize", adjustSidebar);
+
+
 document.getElementById("sidebarToggle").addEventListener("click", function () {
     document.querySelector(".sidebar").classList.toggle("collapsed");
 });
@@ -72,47 +90,72 @@ const inputs = document.querySelectorAll(
 }
 
 document.getElementById("predict_btn").addEventListener("click", async () => {
+   console.log("Predict button clicked");
 
+    const loader = document.getElementById("load");
+    const resultsBox = document.querySelector(".results");
+
+    // Hide previous results
+    resultsBox.classList.remove("show");
+
+    // Show loader
+    loader.style.display = "flex";
+    const startTime = Date.now();
+
+    // Build payload
     const payload = {
-      Bedrooms: Number(document.getElementById("bedrooms").value),
-      Bathrooms: Number(document.getElementById("bathrooms").value),
-      SquareFootage: Number(document.getElementById("sqft").value),
-      Province: document.getElementById("province").value,
-      City: document.getElementById("city").value,
-      PropertyType: document.getElementById("property_type").value,
-      Garage: document.getElementById("garage").checked ? 1 : 0,
-      Pool: document.getElementById("pool").checked ? 1 : 0,
-      Garden: document.getElementById("garden").checked ? 1 : 0,
-      Balcony: document.getElementById("balcony").checked ? 1 : 0
+        Bedrooms: Number(document.getElementById("bedrooms").value),
+        Bathrooms: Number(document.getElementById("bathrooms").value),
+        SquareFootage: Number(document.getElementById("sqft").value),
+        Province: document.getElementById("province").value,
+        City: document.getElementById("city").value,
+        PropertyType: document.getElementById("property_type").value,
+        Garage: document.getElementById("garage").checked ? 1 : 0,
+        Pool: document.getElementById("pool").checked ? 1 : 0,
+        Garden: document.getElementById("garden").checked ? 1 : 0,
+        Balcony: document.getElementById("balcony").checked ? 1 : 0
     };
-  
-    console.log("Sending payload:", payload);
-  
-    const res = await fetch("https://canada-house-price-prediction-4.onrender.com/api/predict", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(payload)
-    });
-  
-    const data = await res.json();
-  
-    const price = Math.round(data.predicted_price);
-    const low = Math.round(price * 0.80);
-    const high = Math.round(price * 1.20);
 
-    document.querySelector(".results").classList.add("show");
+    try {
+
+        const res = await fetch("http://localhost:8000/api/predict", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        const price = Math.round(data.predicted_price);
+        const low = Math.round(price * 0.80);
+        const high = Math.round(price * 1.20);
+
+        // Fill results
+        document.getElementById("price_main").textContent = `$${price.toLocaleString()}`;
+        document.getElementById("range_low").textContent = `$${low.toLocaleString()}`;
+        document.getElementById("range_high").textContent = `$${high.toLocaleString()}`;
+
+    } catch (error) {
+        console.error("Prediction error:", error);
+    }
+
+    const minDuration = 700; // milliseconds
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, minDuration - elapsed);
 
     setTimeout(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
-      }, 150);
+    loader.style.display = "none";  
+    resultsBox.classList.add("show");
 
-  
-    
-    document.getElementById("price_main").textContent = `$${price.toLocaleString()}`;
-    document.getElementById("range_low").textContent = `$${low.toLocaleString()}`;
-    document.getElementById("range_high").textContent = `$${high.toLocaleString()}`;
-  });
+    // Wait for results animation to expand height
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+    }, 350); // matches your .results transition duration
+
+}, remaining);
+});
+
   

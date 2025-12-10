@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Canada House Price Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar collapsed">
         <span class="sidebar-icon" id="sidebarToggle">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                 stroke="white" stroke-width="2" stroke-linecap="round">
@@ -197,7 +198,11 @@
             Predict Price
           </button>
         </div>
-      
+
+        <div class="loader-cont" id="load" style="display: none;">
+          <div class="loader" ></div> 
+        </div>
+
         <div class="results">
           <div class="results-header">Estimated Property Value</div>
           <div id="price_main" class="price-main">$600,000</div>

@@ -8,6 +8,8 @@ End-to-End Machine Learning Web Application
 🚀 Predict Canadian house prices using a production-ready ML model deployed with FastAPI and a responsive frontend.
 This project demonstrates the full data science lifecycle — from data preprocessing and feature engineering to model training, evaluation, and cloud deployment.
 
+<img width="1438" height="895" alt="image" src="https://github.com/user-attachments/assets/d770eb1b-31e3-420b-bdd6-5cbadcf9378c" />
+
 🔗 Live Demo: https://predspriceca.onrender.com/
 
 
@@ -22,6 +24,8 @@ The dataset consists of structured Canadian housing data with:
 ⭐Amenities - Garage, Pool, Garden, Balcony
 
 🎯Target - Sale Price
+
+🔗 Dataset used - https://www.kaggle.com/datasets/yuliiabulana/canada-housing
 
 ## Data Cleaning & Feature Engineering
 

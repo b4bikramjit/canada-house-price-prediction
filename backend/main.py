@@ -17,6 +17,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {"status": "running"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+
 # -------------------------------
 # LOAD MODEL + FREQUENCY MAPS
 # -------------------------------
